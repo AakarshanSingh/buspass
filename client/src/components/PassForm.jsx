@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 const JourneyForm = styled.form`
   position: absolute;
   left: 50%;

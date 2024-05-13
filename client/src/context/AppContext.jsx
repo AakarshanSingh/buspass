@@ -19,7 +19,7 @@ export const AppContextProvider = ({ children }) => {
   const logoutUser = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/logout`, {
+      const res = await fetch(`/api/logout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });

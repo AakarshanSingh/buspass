@@ -50,7 +50,7 @@ const VerifyPass = () => {
   const isUserPassValid = async (qrData) => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/admin/check`,
+        `/admin/check`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

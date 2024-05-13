@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useAppContext } from "../context/AppContext";
-import { Link } from "react-router-dom";
-import Loader from "./Loader";
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useAppContext } from '../context/AppContext';
+import { Link } from 'react-router-dom';
+import Loader from './Loader';
 
 const Wrapper = styled.section`
   display: flex;
@@ -24,7 +24,7 @@ const PassRoute = styled.div`
   gap: 3rem;
 `;
 const PassRouteValid = styled.div`
-text-align: center;
+  text-align: center;
   p:nth-child(1) {
     color: rgb(224, 50, 76);
     font-weight: 600;
@@ -119,15 +119,15 @@ const PassCards = () => {
   }, []);
 
   const getMyPass = async () => {
-    const token = JSON.parse(localStorage.getItem("buspass")).token;
+    const token = JSON.parse(localStorage.getItem('buspass')).token;
     if (token) {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/api/user/get-pass`,
+          `/api/user/get-pass`,
           {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${token}`,
             },
           }
@@ -139,13 +139,13 @@ const PassCards = () => {
         console.log(error);
       }
     } else {
-      console.log("No token found, user not logged in");
+      console.log('No token found, user not logged in');
     }
   };
 
   const handleDownloadPass = async (pass) => {
     // Base color
-    const baseColor = "rgb(221, 20, 50)";
+    const baseColor = 'rgb(221, 20, 50)';
 
     try {
       // Generating QR code URL
@@ -213,7 +213,7 @@ const PassCards = () => {
       `;
 
       // Open a new window with the pass HTML content
-      const printWindow = window.open("", "_blank");
+      const printWindow = window.open('', '_blank');
       printWindow.document.open();
       printWindow.document.write(`
         <html>
@@ -229,7 +229,7 @@ const PassCards = () => {
         printWindow.print();
       }, 100);
     } catch (error) {
-      console.error("Error generating QR code:", error);
+      console.error('Error generating QR code:', error);
     }
   };
 
@@ -240,25 +240,25 @@ const PassCards = () => {
           {myPasses.map((pass) => {
             let date = new Date(pass.validity);
             const dateObject = new Date(date);
-            const formattedDate = dateObject.toLocaleDateString("en-US", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
+            const formattedDate = dateObject.toLocaleDateString('en-US', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
             });
-            const dateParts = formattedDate.split(" ");
+            const dateParts = formattedDate.split(' ');
             const qr = `https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=${pass._id}`;
             return (
               <PassCard key={pass._id}>
                 <PassRoute>
                   <PassRouteValid>
-                    <p>{`${dateParts[1].replace(",", " ")}`}</p>
+                    <p>{`${dateParts[1].replace(',', ' ')}`}</p>
                     <p>{`${dateParts[0]} ${dateParts[2]}`}</p>
                     <h6>Valid till </h6>
                   </PassRouteValid>
                   <PassRouteDestination>
                     <PassUser>
-                    <h6>Name of the Passenger</h6>
-                    <p>{authUser.userDetails.name}</p>
+                      <h6>Name of the Passenger</h6>
+                      <p>{authUser.userDetails.name}</p>
                     </PassUser>
                     <h6>Route</h6>
                     <p>{`${pass.from} - ${pass.to}`}</p>
@@ -277,7 +277,7 @@ const PassCards = () => {
                       alt=""
                       onLoad={() => handleImageLoad(pass._id)}
                       style={{
-                        display: imageLoadedMap[pass._id] ? "block" : "none",
+                        display: imageLoadedMap[pass._id] ? 'block' : 'none',
                       }}
                     />
                   </PassDetails>

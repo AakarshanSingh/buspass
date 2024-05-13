@@ -1,12 +1,12 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable react/prop-types */
-import styled from "styled-components";
-import Loader from "./Loader";
-import { toast } from "react-toastify";
-import { useAppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
-import { loadStripe } from "@stripe/stripe-js";
-import { useState } from "react";
+import styled from 'styled-components';
+import Loader from './Loader';
+import { toast } from 'react-toastify';
+import { useAppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+import { useState } from 'react';
 
 const CardContainer = styled.div`
   margin-top: 10px;
@@ -51,6 +51,7 @@ const ServiceProviderDetails = styled.div`
 `;
 const JourneyCardDescription = styled.div`
   display: grid;
+  width: 800px;
   grid-template-columns: 1fr 1fr;
   background-color: #ffffff;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
@@ -127,8 +128,8 @@ const DestinationCard = ({ allBuses }) => {
 
   const buyWithCrypto = async (busId, busPrice) => {
     if (!authUser) {
-      setTimeout(() => navigate("/auth"), 500);
-      toast.error("Please login first");
+      setTimeout(() => navigate('/auth'), 500);
+      toast.error('Please login first');
       return false;
     }
     setSelectedBus(busId);
@@ -143,7 +144,7 @@ const DestinationCard = ({ allBuses }) => {
       setPrice(btcAmount.toFixed(8));
       setShowQR(true);
     } catch (error) {
-      console.error("Error fetching BTC price:", error);
+      console.error('Error fetching BTC price:', error);
     }
   };
   const closeQRModal = () => {
@@ -154,14 +155,14 @@ const DestinationCard = ({ allBuses }) => {
     e.preventDefault();
     try {
       // Show loading toast
-      const loadingToast = toast.loading("Processing payment...");
-      const token = JSON.parse(localStorage.getItem("buspass")).token;
+      const loadingToast = toast.loading('Processing payment...');
+      const token = JSON.parse(localStorage.getItem('buspass')).token;
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/user/book-crypto`,
+        `/api/user/book-crypto`,
         {
-          method: "post",
+          method: 'post',
           headers: {
-            "Content-type": "application/json",
+            'Content-type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
@@ -194,34 +195,34 @@ const DestinationCard = ({ allBuses }) => {
       ]);
 
       if (result.success) {
-        toast.success("Payment successful");
+        toast.success('Payment successful');
         setShowQR(false);
-        setTimeout(() => navigate("/auth"), 500);
+        setTimeout(() => navigate('/auth'), 500);
       } else {
-        toast.error("Payment error");
+        toast.error('Payment error');
       }
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("An error occurred while processing payment");
+      console.error('Error:', error);
+      toast.error('An error occurred while processing payment');
     }
   };
 
   const buyWithCard = async (busId) => {
     if (!authUser) {
-      setTimeout(() => navigate("/auth"), 500);
-      toast.error("Please login first");
+      setTimeout(() => navigate('/auth'), 500);
+      toast.error('Please login first');
       return false;
     }
     try {
       const stripe_key = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
       const stripe = await loadStripe(stripe_key);
-      const token = JSON.parse(localStorage.getItem("buspass")).token;
+      const token = JSON.parse(localStorage.getItem('buspass')).token;
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/user/book`,
+        `/api/user/book`,
         {
-          method: "post",
+          method: 'post',
           headers: {
-            "Content-type": "application/json",
+            'Content-type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
@@ -239,7 +240,7 @@ const DestinationCard = ({ allBuses }) => {
         console.log(result.error);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 

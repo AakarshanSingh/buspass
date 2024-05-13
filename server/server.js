@@ -10,7 +10,7 @@ import passRouter from './routes/passRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import busRouter from './routes/busRoutes.js';
 
-dotenv.config({ path: '../.env' });
+dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -22,7 +22,7 @@ cloudinary.config({
 });
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: '*',
   credentials: true,
 };
 

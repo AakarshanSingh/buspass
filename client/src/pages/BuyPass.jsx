@@ -70,7 +70,7 @@ const BuyPass = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/buses`, {
+      const res = await fetch(`/api/buses`, {
         method: 'post',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
