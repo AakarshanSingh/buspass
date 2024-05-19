@@ -22,7 +22,7 @@ cloudinary.config({
 });
 
 const corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:8080',
   credentials: true,
 };
 

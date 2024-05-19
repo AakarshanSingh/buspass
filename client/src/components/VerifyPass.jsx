@@ -1,8 +1,7 @@
-import jsQR from 'jsqr';
-
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -26,12 +25,9 @@ const Button = styled.button`
 const VerifyPass = () => {
   const [scanning, setScanning] = useState(false);
   const [timerId, setTimerId] = useState(null);
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
 
   const handleScan = (data) => {
     if (data) {
-      console.log(data);
       isUserPassValid(data);
       setScanning(false);
     }
@@ -43,17 +39,17 @@ const VerifyPass = () => {
 
   const handleScanButtonClick = () => {
     setScanning(true);
-    startVideo();
+    startTimer();
   };
 
   const handleScanAgainButtonClick = () => {
     setScanning(true);
-    startVideo();
+    startTimer();
   };
 
   const isUserPassValid = async (qrData) => {
     try {
-      const res = await fetch(`/api/admin/check`, {
+      const res = await fetch(`http://localhost:5000/api/admin/check`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ busId: qrData }),
@@ -94,47 +90,14 @@ const VerifyPass = () => {
     return () => resetTimer();
   }, [scanning]);
 
-  const startVideo = () => {
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: 'environment' } })
-      .then((stream) => {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      })
-      .catch((err) => handleError(err));
-  };
-
-  const captureImage = () => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    processQRCode(imageData);
-  };
-
-  const processQRCode = (imageData) => {
-    const code = jsQR(imageData.data, imageData.width, imageData.height);
-    if (code) {
-      handleScan(code.data);
-    }
-  };
-
-  useEffect(() => {
-    if (scanning) {
-      const interval = setInterval(captureImage, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [scanning]);
-
   return (
     <Container>
       {scanning ? (
-        <video
-          ref={videoRef}
+        <QrScanner
+          delay={3}
+          onError={handleError}
+          onScan={handleScan}
           style={{ width: '300px', height: '300px' }}
-          playsInline
-          autoPlay
-          muted
         />
       ) : (
         <video
@@ -144,12 +107,6 @@ const VerifyPass = () => {
           muted
         />
       )}
-      <canvas
-        ref={canvasRef}
-        style={{ display: 'none' }}
-        width="300"
-        height="300"
-      ></canvas>
       {scanning ? (
         <Button onClick={() => setScanning(false)}>Stop Scan</Button>
       ) : (

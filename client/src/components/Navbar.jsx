@@ -103,7 +103,6 @@ const ProfileImage = styled.img`
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { authUser, logoutUser, loading } = useAppContext();
-  console.log(authUser);
 
   return (
     <Header>
