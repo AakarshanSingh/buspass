@@ -35,7 +35,7 @@ app.use(cookieParser());
 
 app.use('/api', authRouter);
 app.use('/api/user', passRouter);
-app.use('/admin', adminRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api', busRouter);
 
 app.listen(PORT, async () => {

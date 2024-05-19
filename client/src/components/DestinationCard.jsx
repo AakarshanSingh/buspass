@@ -112,7 +112,7 @@ const Wrapper = styled.div`
 `;
 
 const DestinationCard = ({ allBuses }) => {
-  const BTC_QR = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${
+  const BTC_QR = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${
     import.meta.env.VITE_BTC_ADDRESS
   }`;
 
@@ -157,20 +157,17 @@ const DestinationCard = ({ allBuses }) => {
       // Show loading toast
       const loadingToast = toast.loading('Processing payment...');
       const token = JSON.parse(localStorage.getItem('buspass')).token;
-      const res = await fetch(
-        `/api/user/book-crypto`,
-        {
-          method: 'post',
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            price,
-            busId: selectedBus,
-          }),
-        }
-      );
+      const res = await fetch(`/api/user/book-crypto`, {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          price,
+          busId: selectedBus,
+        }),
+      });
       const data = await res.json();
 
       toast.dismiss(loadingToast);
@@ -217,19 +214,16 @@ const DestinationCard = ({ allBuses }) => {
       const stripe_key = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
       const stripe = await loadStripe(stripe_key);
       const token = JSON.parse(localStorage.getItem('buspass')).token;
-      const res = await fetch(
-        `/api/user/book`,
-        {
-          method: 'post',
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            busId,
-          }),
-        }
-      );
+      const res = await fetch(`/api/user/book`, {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          busId,
+        }),
+      });
       const session = await res.json();
 
       const result = stripe.redirectToCheckout({

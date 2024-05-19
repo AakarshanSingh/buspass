@@ -99,7 +99,7 @@ const DownloadPass = styled.button`
   color: white;
   border: none;
   margin-top: 1rem;
-  margin-bottom: -8px;
+  margin-bottom: 8px;
   z-index: 1;
 `;
 
@@ -149,7 +149,7 @@ const PassCards = () => {
 
     try {
       // Generating QR code URL
-      const qrCodeUrl = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${pass._id}`;
+      const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${pass._id}`;
 
       // Creating HTML representation of the pass with CSS styles and QR code
       const passHtml = `
@@ -246,7 +246,7 @@ const PassCards = () => {
               year: 'numeric',
             });
             const dateParts = formattedDate.split(' ');
-            const qr = `https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=${pass._id}`;
+            const qr = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${pass._id}`;
             return (
               <PassCard key={pass._id}>
                 <PassRoute>
