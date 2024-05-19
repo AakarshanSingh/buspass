@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 const AdminPage = () => {
   const { authUser } = useAppContext();
 
-  return authUser.userDetails.role === 'admin' ? (
+  return authUser?.userDetails?.role === 'admin' ? (
     <div>
       <VerifyPass />
     </div>

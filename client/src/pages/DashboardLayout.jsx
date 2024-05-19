@@ -6,7 +6,10 @@ import DashboardNavbar from '../components/DashboardNavbar';
 
 const DashboardLayout = () => {
   const { authUser } = useAppContext();
-  return authUser ? (
+
+  return authUser?.userDetails?.role === 'admin' ? (
+    <>{<Navigate to="/admin" />}</>
+  ) : authUser ? (
     <Wrapper>
       <main className="dashboard">
         {/* <BigSidebar /> */}
@@ -28,7 +31,6 @@ const DashboardLayout = () => {
     <>{<Navigate to="/auth" />}</>
   );
 };
-
 
 const Wrapper = styled.section`
   .dashboard {
