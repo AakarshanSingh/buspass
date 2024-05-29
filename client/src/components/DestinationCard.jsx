@@ -263,7 +263,7 @@ const DestinationCard = ({ allBuses }) => {
           <JourneyCardDescription>
             <JourneyCardTitle>Service Provider</JourneyCardTitle>
             <JourneyCardDetails>
-              <p>Dep Time</p>
+              <p>Boarding Point</p>
               <p>Arr time</p>
               <p>Fare</p>
             </JourneyCardDetails>
@@ -284,7 +284,7 @@ const DestinationCard = ({ allBuses }) => {
                     </p>
                   </ServiceProvider>
                   <ServiceProviderDetails>
-                    <p>{item?.departureTime}</p>
+                    <p>{item?.boardingPoint}</p>
                     <p>{item?.arrivalTime}</p>
                     <p>
                       {`₹ ${item?.price}`}
