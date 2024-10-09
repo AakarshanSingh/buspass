@@ -1,6 +1,6 @@
 # Bus Pass
 
-A chat application.
+Bus pass booking application.
 
 
 ## Environment Variables
